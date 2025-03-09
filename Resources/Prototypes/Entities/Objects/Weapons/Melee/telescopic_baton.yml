@@ -41,6 +41,7 @@
     delay: 0
     knockdownTime: 1
   - type: MeleeWeapon
+    animationRotation: -45 # WWDP
     attackRate: 1 # WWDP
     bluntStaminaDamageFactor: 4.5 # WWDP, 4 hits to stun
     maxTargets: 1
