@@ -10,6 +10,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
   - type: Armor
+    protectedArea: Body # WWDP
     modifiers:
       coefficients:
         Blunt: 0.6 #ballistic plates = better protection
@@ -31,6 +32,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Armor
+    protectedArea: Body # WWDP
     modifiers:
       coefficients:
         Blunt: 0.7 #slightly better overall protection but slightly worse than bulletproof armor against bullets seems sensible
@@ -52,6 +54,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
   - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
+    protectedArea: Body # WWDP
     modifiers:
       coefficients:
         Blunt: 0.70

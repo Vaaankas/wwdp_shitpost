@@ -11,6 +11,7 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
     clothingType: suit # WD EDIT
   - type: Armor
+    protectedArea: FullBody # WWDP
     modifiers:
       coefficients:
         Caustic: 0.5

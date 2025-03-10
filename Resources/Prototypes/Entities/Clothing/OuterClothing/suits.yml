@@ -13,6 +13,7 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Armor
+    protectedArea: FullBodyHandsFeet # WWDP
     modifiers:
       coefficients:
         Blunt: 0.9
@@ -72,6 +73,7 @@
   - type: FireProtection
     reduction: 0.65 # doesnt have a full seal so not as good
   - type: Armor
+    protectedArea: FullBodyHandsFeet # WWDP
     modifiers:
       coefficients:
         Slash: 0.9
@@ -108,6 +110,7 @@
     - type: FireProtection
       reduction: 0.8 # atmos firesuit offers best protection, hardsuits are a little vulnerable
     - type: Armor
+      protectedArea: FullBodyHandsFeet # WWDP
       modifiers:
         coefficients:
           Slash: 0.9
@@ -135,6 +138,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: Armor
+    protectedArea: FullBodyHandsFeet # WWDP
     modifiers:
       coefficients:
         Heat: 0.90
@@ -175,6 +179,7 @@
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor
+    protectedArea: FullBodyHandsFeet # WWDP
     modifiers:
       coefficients:
         Blunt: 0.8

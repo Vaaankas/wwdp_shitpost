@@ -156,6 +156,7 @@
   - type: Item
     size: Huge # White Dream: Bringing back our old hardsuits
   - type: Armor
+    protectedArea: FullBodyHandsFeet # WWDP
     modifiers:
       coefficients:
         Blunt: 0.90
