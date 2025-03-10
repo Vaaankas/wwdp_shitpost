@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
@@ -53,8 +54,15 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
 
+        // WWDP edit; bodypart targeting
+        TargetBodyPart? targetPart = null;
+
+        if (TryComp<TargetingComponent>(component.Shooter, out var targeting))
+            targetPart = targeting.Target;
+
         var otherName = ToPrettyString(target);
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter, targetPart: targetPart);
+        // WWDP edit end
         var deleted = Deleted(target);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
@@ -108,7 +116,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     // WD EDIT START
     private void OnEmbed(EntityUid uid, EmbeddableProjectileComponent component, ref EmbedEvent args)
     {
-        var dmg = _damageableSystem.TryChangeDamage(args.Embedded, component.Damage, origin: args.Shooter);
+        var dmg = _damageableSystem.TryChangeDamage(args.Embedded, component.Damage, origin: args.Shooter, targetPart: args.BodyPart);
         if (dmg is { Empty: false })
             _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.Embedded }, Filter.Pvs(args.Embedded, entityManager: EntityManager));
     }

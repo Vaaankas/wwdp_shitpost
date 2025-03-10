@@ -3,12 +3,15 @@ using Content.Shared.Damage;
 using Robust.Shared.Player;
 using Content.Shared.Weapons.Melee.Events;
 using System.Linq;
+using Content.Shared._Shitmed.Targeting;
+
 
 namespace Content.Server.Damage.Systems;
 
 public sealed class DamageOnHitSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedTargetingSystem _targeting = default!; // WWDP
     private readonly Random _random = new Random();
 
     public override void Initialize()
@@ -23,7 +26,7 @@ public sealed class DamageOnHitSystem : EntitySystem
         if (args.HitEntities.Any()) {
             _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances,
                 targetPart: component.TargetParts is not null
-                            ? component.TargetParts[_random.Next(component.TargetParts.Count)]
+                            ? _targeting.GetRandomBodyPart(component.TargetParts) // WWDP
                             : null);
         }
     }

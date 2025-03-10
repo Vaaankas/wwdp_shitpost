@@ -27,5 +27,14 @@ public enum TargetBodyPart : ushort
     Arms = LeftArm | RightArm,
     Legs = LeftLeg | RightLeg,
     Feet = LeftFoot | RightFoot,
+
+    // WWDP edit; more groups for Armor ProtectedArea
+    Body = Torso | Groin,
+    BodyArms = Torso | Groin | LeftArm | RightArm,
+    BodyArmsHands = Torso | Groin | LeftArm | RightArm | LeftHand | RightHand,
+    GroinLegsFeet = Groin | LeftLeg | RightLeg | LeftFoot | RightFoot,
+    LegsFeet = LeftLeg | RightLeg | LeftFoot | RightFoot,
+    // WWDP edit end
+
     All = Head | Torso | Groin | LeftArm | LeftHand | RightArm | RightHand | LeftLeg | LeftFoot | RightLeg | RightFoot,
 }

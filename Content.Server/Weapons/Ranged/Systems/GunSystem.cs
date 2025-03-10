@@ -25,6 +25,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Containers;
 using Content.Shared._Lavaland.Weapons.Ranged.Events;
+using Content.Shared._Shitmed.Targeting;
 using ProjectileShotEvent = Content.Shared._Lavaland.Weapons.Ranged.Events.ProjectileShotEvent; // Lavaland Change
 
 namespace Content.Server.Weapons.Ranged.Systems;
@@ -40,6 +41,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
+    [Dependency] private readonly SharedTargetingSystem _targeting = default!; // WWDP
 
     private const float DamagePitchVariation = 0.05f;
 
@@ -223,9 +225,18 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         var dmg = hitscan.Damage;
 
+                        // WWDP edit; bodypart targeting
+                        TargetBodyPart? targetPart = null;
+
+                        if (TryComp<TargetingComponent>(user, out var targeting))
+                            targetPart = targeting.Target;
+                        else
+                            targetPart = _targeting.GetRandomBodyPart();
+
                         var hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
+                            dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user, targetPart: targetPart);
+                        // WWDP edit end
 
                         // check null again, as TryChangeDamage returns modified damage values
                         if (dmg != null)

@@ -166,6 +166,8 @@ public partial class SharedBodySystem
 
     private void OnBodyDamageModify(Entity<BodyComponent> bodyEnt, ref DamageModifyEvent args)
     {
+        return; // WWDP test
+
         if (args.TargetPart != null)
         {
             var (targetType, _) = ConvertTargetBodyPart(args.TargetPart.Value);

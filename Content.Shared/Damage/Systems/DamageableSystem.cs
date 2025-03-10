@@ -15,6 +15,7 @@ using Robust.Shared.Utility;
 // Shitmed Change
 using Content.Shared.Body.Systems;
 using Content.Shared._Shitmed.Targeting;
+using Content.Shared.Body.Components;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Damage
@@ -27,6 +28,7 @@ namespace Content.Shared.Damage
         [Dependency] private readonly SharedBodySystem _body = default!; // Shitmed Change
         [Dependency] private readonly IRobustRandom _random = default!; // Shitmed Change
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+        [Dependency] private readonly SharedTargetingSystem _targeting = default!;
 
         private EntityQuery<AppearanceComponent> _appearanceQuery;
         private EntityQuery<DamageableComponent> _damageableQuery;
@@ -151,6 +153,11 @@ namespace Content.Shared.Damage
 
             if (before.Cancelled)
                 return null;
+
+            // WWDP edit; bodypart targeting
+            if (HasComp<BodyComponent>(uid) && targetPart == null)
+                targetPart = _targeting.GetRandomBodyPart();
+            // WWDP edit end
 
             // Shitmed Change Start
             if (doPartDamage)

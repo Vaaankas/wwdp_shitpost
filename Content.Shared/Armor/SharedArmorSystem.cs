@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
@@ -13,6 +14,7 @@ namespace Content.Shared.Armor;
 public abstract class SharedArmorSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!; // WWDP
 
     /// <inheritdoc />
     public override void Initialize()
@@ -26,6 +28,30 @@ public abstract class SharedArmorSystem : EntitySystem
 
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
     {
+        // WWDP; armor now only protects bodyparts it is covering as defined in ArmorComponent.ProtectedArea
+        var blockable = false;
+
+        foreach (var damage in args.Args.Damage.DamageDict)
+        {
+            if (component.Modifiers.Coefficients.ContainsKey(damage.Key) && damage.Value > 0
+                || component.Modifiers.FlatReduction.ContainsKey(damage.Key) && damage.Value > 0)
+            {
+                blockable = true;
+                break;
+            }
+        }
+
+        if (!blockable)
+            return;
+
+        if (args.Args.TargetPart == null)
+            return;
+
+        if (!component.ProtectedArea.HasFlag(args.Args.TargetPart.Value))
+            return;
+
+        _popupSystem.PopupClient($"{Name(uid)} softens the blow!", uid);
+        // WWDP edit end
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
     }
 
