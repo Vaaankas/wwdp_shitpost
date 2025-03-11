@@ -455,8 +455,8 @@
     sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
-  - type: FullBody # DeltaV - tweak for Velta armour
-    protectedArea: BodyArms # WWDP
+  - type: Armor # DeltaV - tweak for Velta armour
+    protectedArea: FullBody # WWDP
     modifiers:
       coefficients:
         Blunt: 0.85

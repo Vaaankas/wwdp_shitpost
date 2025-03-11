@@ -23,6 +23,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTargetingSystem _targeting = default!;
 
     public override void Initialize()
     {
@@ -51,14 +52,16 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
-        RaiseLocalEvent(uid, ref ev);
-
         // WWDP edit; bodypart targeting
-        TargetBodyPart? targetPart = null;
+        TargetBodyPart targetPart;
 
         if (TryComp<TargetingComponent>(component.Shooter, out var targeting))
             targetPart = targeting.Target;
+        else
+            targetPart = _targeting.GetRandomBodyPart();
+
+        var ev = new ProjectileHitEvent(component.Damage, target, targetPart, component.Shooter);
+        RaiseLocalEvent(uid, ref ev);
 
         var otherName = ToPrettyString(target);
         var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter, targetPart: targetPart);

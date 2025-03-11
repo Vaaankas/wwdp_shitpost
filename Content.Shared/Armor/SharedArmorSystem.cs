@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+﻿using Content.Shared.Coordinates;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ public abstract class SharedArmorSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!; // WWDP
+    [Dependency] private readonly InventorySystem _inventory = default!; // WWDP
 
     /// <inheritdoc />
     public override void Initialize()
@@ -50,7 +52,10 @@ public abstract class SharedArmorSystem : EntitySystem
         if (!component.ProtectedArea.HasFlag(args.Args.TargetPart.Value))
             return;
 
-        _popupSystem.PopupClient($"{Name(uid)} softens the blow!", uid);
+        if (!_inventory.TryGetContainingEntity(uid, out var wearer))
+            return;
+
+        _popupSystem.PopupClient($"{Name(uid)} softens the blow!", wearer);
         // WWDP edit end
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
     }

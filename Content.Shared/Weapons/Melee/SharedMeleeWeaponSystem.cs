@@ -521,14 +521,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // somewhat messy scuffle. See also, heavy attacks.
         Interaction.DoContactInteraction(user, target);
 
-        // For stuff that cares about it being attacked.
-        var attackedEvent = new AttackedEvent(meleeUid, user, targetXform.Coordinates);
-        RaiseLocalEvent(target.Value, attackedEvent);
         // WWDP edit; bodypart targeting
         TargetBodyPart? targetPart = null;
 
         if (TryComp<TargetingComponent>(user, out var targeting))
             targetPart = targeting.Target;
+        else
+            targetPart = _targeting.GetRandomBodyPart();
+
+        // For stuff that cares about it being attacked.
+        var attackedEvent = new AttackedEvent(meleeUid, user, targetXform.Coordinates, targetPart);
+        RaiseLocalEvent(target.Value, attackedEvent);
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin:user, ignoreResistances: resistanceBypass, partMultiplier: component.ClickPartDamageMultiplier, targetPart: targetPart);
@@ -696,9 +699,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 continue;
             }
 
-            var attackedEvent = new AttackedEvent(meleeUid, user, GetCoordinates(ev.Coordinates));
-            RaiseLocalEvent(entity, attackedEvent);
-
             // WWDP edit; bodypart targeting
             TargetBodyPart? targetPart = null;
 
@@ -706,6 +706,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 targetPart = targeting.Target;
             else
                 targetPart = _targeting.GetRandomBodyPart();
+
+            var attackedEvent = new AttackedEvent(meleeUid, user, GetCoordinates(ev.Coordinates), targetPart);
+            RaiseLocalEvent(entity, attackedEvent);
 
             var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
