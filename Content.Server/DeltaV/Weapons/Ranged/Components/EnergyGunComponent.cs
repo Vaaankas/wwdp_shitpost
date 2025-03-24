@@ -1,6 +1,8 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Server.DeltaV.Weapons.Ranged.Systems;
+using Content.Shared.Damage;
+
 
 namespace Content.Server.DeltaV.Weapons.Ranged.Components;
 
@@ -42,6 +44,18 @@ public sealed partial class EnergyWeaponFireMode
     /// </summary>
     [DataField("fireCost")]
     public float FireCost = 100;
+
+    /// <summary>
+    /// Heat increase for overheating guns using this mode
+    /// </summary>
+    [DataField("heatIncrease")]
+    public float HeatIncrease = 15;
+
+    /// <summary>
+    /// Overheat damage for guns using this mode
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier OverheatDamage = new() { DamageDict = new() { ["Heat"] = 15 } };
 
     /// <summary>
     /// The name of the selected firemode

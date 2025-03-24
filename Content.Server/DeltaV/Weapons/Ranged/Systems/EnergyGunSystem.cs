@@ -9,6 +9,8 @@ using Content.Shared.DeltaV.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared._White.Lasers;
+
 
 namespace Content.Server.DeltaV.Weapons.Ranged.Systems;
 
@@ -124,6 +126,39 @@ public sealed class EnergyGunSystem : EntitySystem
 
             projectileBatteryAmmoProvider.Prototype = fireMode.Prototype;
             projectileBatteryAmmoProvider.FireCost = fireMode.FireCost;
+
+            if (user != null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode", ("mode", component.CurrentFireMode.Name != string.Empty ? component.CurrentFireMode.Name : prototype.Name)), uid, user.Value);
+            }
+
+            if (component.CurrentFireMode.State == string.Empty)
+                return;
+
+            if (TryComp<AppearanceComponent>(uid, out var _) && TryComp<ItemComponent>(uid, out var item))
+            {
+                _item.SetHeldPrefix(uid, component.CurrentFireMode.State, false, item);
+                switch (component.CurrentFireMode.State)
+                {
+                    case "disabler":
+                        UpdateAppearance(uid, EnergyGunFireModeState.Disabler);
+                        break;
+                    case "lethal":
+                        UpdateAppearance(uid, EnergyGunFireModeState.Lethal);
+                        break;
+                    case "special":
+                        UpdateAppearance(uid, EnergyGunFireModeState.Special);
+                        break;
+                }
+            }
+        }
+        else if (TryComp(uid, out ProjectileOverheatingAmmoProviderComponent? overheatingAmmoProviderComponent))
+        {
+            if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
+                return;
+
+            overheatingAmmoProviderComponent.Prototype = fireMode.Prototype;
+            overheatingAmmoProviderComponent.HeatIncrease = fireMode.HeatIncrease;
 
             if (user != null)
             {

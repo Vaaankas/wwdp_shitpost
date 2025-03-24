@@ -1,0 +1,726 @@
+﻿- type: entity
+  id: BaseWeaponOverheating
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+  - type: Item
+    size: Huge
+  - type: Clothing
+    equipSound: /Audio/_White/Equip/clothingrustle4.ogg
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: DisarmMalus
+    malus: 0.3
+    wieldedBonus: 0.3
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    fireOnDropChance: 0.15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: Appearance
+  - type: StaticPrice
+    price: 500
+  - type: MeleeWeapon
+    attackRate: 1.3333
+    damage:
+      types:
+        Blunt: 8.5
+    bluntStaminaDamageFactor: 1.25
+    swapKeys: true
+    disableHeavy: true
+    animation: WeaponArcThrust
+    wideAnimationRotation: 180
+    soundHit:
+      collection: MetalThud
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2.5
+  - type: DamageOtherOnHit
+    staminaCost: 7
+  - type: EmitSoundOnPickup
+    sound:
+      collection: LasersPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: LasersDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: LasersDrop
+  # Shitmed Change
+  - type: Cautery
+    speed: 0.9
+  - type: SurgeryTool
+    endSound:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+
+- type: entity
+  id: BaseWeaponOverheatingSmall
+  parent: BaseWeaponOverheating
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Gun
+    bonusAngleIncreaseMove: 20
+    bonusAngleIncreaseTurn: 0.4
+    bonusAngleDecay: 80
+    maxBonusAngle: 10
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+  - type: MeleeWeapon
+    attackRate: 1.2
+    damage:
+      types:
+        Blunt: 7.5
+    bluntStaminaDamageFactor: 1.0
+    wideAnimationRotation: 135
+  - type: DamageOtherOnHit
+    staminaCost: 5
+
+- type: entity
+  name: retro laser blaster
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponLaserGun
+  description: A weapon using light amplified by the stimulated emission of radiation.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaser
+    emergencyCooldown: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: makeshift laser pistol
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponMakeshiftLaser
+  description: Better pray it won't burn your hands off.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaser
+    emergencyCooldown: false
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+
+- type: entity
+  name: laser rifle
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
+  id: WeaponLaserCarbine
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: StaticPrice
+    price: 420
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaser
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,7,1
+
+- type: entity
+  name: practice laser rifle
+  parent: WeaponLaserCarbine
+  id: WeaponLaserCarbinePractice
+  description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
+  components:
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaserPractice
+    overheatDamage:
+      types:
+        Heat: 1
+  - type: StaticPrice
+    price: 300
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 4
+
+- type: entity
+  name: pulse pistol
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponPulsePistol
+  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletPulse
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+
+- type: entity
+  name: antique pulse pistol
+  parent: WeaponPulsePistol
+  id: WeaponPulsePistolHoS
+  description: One of the many weapons belonging to the Head of Security's private collection. This pistol is engraved with the words, "Forgive Us, Mother Sol'"
+  components:
+  - type: StealTarget
+    stealGroup: HoSAntiqueWeapon
+
+- type: entity
+  name: captain's pulse pistol
+  parent: WeaponPulsePistol
+  id: WeaponPulsePistolCaptain
+  description: A rare and exotic handgun gifted to the station's Captain. Its ivory grip has been engraved with the words, "Glory to the Company, Glory to Mother Sol. Phoron will make us all rich."
+  components:
+  - type: StealTarget
+    stealGroup: WeaponCaptain
+
+- type: entity
+  name: pulse carbine
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
+  id: WeaponPulseCarbine
+  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 3
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletPulse
+    heatIncrease: 10
+  - type: Battery
+    maxCharge: 5000
+    startingCharge: 5000
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,5,1
+
+- type: entity
+  name: pulse rifle
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
+  id: WeaponPulseRifle
+  description: A weapon that is almost as infamous as its users.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletPulse
+    heatIncrease: 5 # Death Squad gun OP
+  - type: Battery
+    maxCharge: 40000
+    startingCharge: 40000
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,5,1
+
+- type: entity
+  name: laser cannon
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
+  id: WeaponLaserCannon
+  description: A heavy duty, high powered laser weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaserHeavy
+  - type: MeleeWeapon
+    attackRate: 1.4
+    damage:
+      types:
+        Blunt: 10
+    bluntStaminaDamageFactor: 1.3333
+  - type: DamageOtherOnHit
+    staminaCost: 9.5
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,7,1
+
+- type: entity
+  name: x-ray cannon
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
+  id: WeaponXrayCannon
+  description: An experimental weapon that uses concentrated x-ray energy against its target.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    heatIncrease: 10
+    proto: BulletXRay
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,7,1
+
+- type: entity
+  name: civilian disabler
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponCivilianDisabler
+  description: The original prototype disablers refitted for civilian self defence use and put in a shiny new shell. It has a much lower power output than the modern disabler in use by Security, and as such requires no license to carry.
+  components:
+  - type: Tag
+    tags:
+    - Taser
+    - Sidearm
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/civilian-disabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/civilian-disabler.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    heatIncrease: 10
+    proto: BulletCivilianDisabler
+    overheatDamage:
+      types:
+        Heat: 5
+    explodeOnOverheat: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: ExtendDescription
+    descriptionList:
+    - description: "civiliandisabler-extenddescription-security"
+      fontSize: 12
+      color: "#ff0000"
+      requireDetailRange: true
+      requirements:
+      - !type:CharacterDepartmentRequirement
+        departments:
+        - Security
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 3.0
+    bluntStaminaDamageFactor: 2
+    wideAnimationRotation: 90
+
+- type: entity
+  name: disabler
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponDisabler
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+  - type: Tag
+    tags:
+    - Taser
+    - Sidearm
+    - WeaponDisabler
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    heatIncrease: 10
+    proto: BulletDisabler
+    overheatDamage:
+      types:
+        Heat: 5
+    explodeOnOverheat: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: GuideHelp
+    guides:
+    - Security
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5.0
+    bluntStaminaDamageFactor: 2.5
+    wideAnimationRotation: 135
+
+- type: entity
+  name: CentCom disabler
+  parent: WeaponDisabler
+  id: WeaponCCDisabler
+  description: An improved self-defense weapon that exhausts organic targets, weakening them until they collapse. Only for the finest officers that we don't trust with lethals.
+  components:
+  - type: StealTarget
+    stealGroup: NTRepWeapon
+  - type: Gun
+    fireRate: 3
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/ccdisabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Taser
+    - Sidearm
+
+- type: entity
+  name: disabler SMG
+  parent: BaseWeaponOverheating
+  id: WeaponDisablerSMG
+  description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,5,1
+  - type: Tag
+    tags:
+    - Taser
+    - Sidearm
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    bonusAngleIncreaseMove: 20
+    bonusAngleIncreaseTurn: 0.4
+    bonusAngleDecay: 50
+    maxBonusAngle: 10
+    selectedMode: FullAuto
+    fireRate: 4
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    heatIncrease: 5 # Rapid Fire
+    proto: BulletDisablerSMG
+    overheatDamage:
+      types:
+        Heat: 5
+    explodeOnOverheat: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: StaticPrice
+    price: 260
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6.5
+    bluntStaminaDamageFactor: 2.5
+    wideAnimationRotation: 180
+
+- type: entity
+  name: practice disabler
+  parent: WeaponDisabler
+  id: WeaponDisablerPractice
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: StaticPrice
+    price: 100
+  - type: ProjectileOverheatingAmmoProvider
+    heatIncrease: 10
+    proto: BulletDisablerPractice
+    overheatDamage:
+      types:
+        Heat: 1
+    explodeOnOverheat: false
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 3
+    bluntStaminaDamageFactor: 1.0
+
+- type: entity
+  name: antique laser pistol
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponAntiqueLaser
+  description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaser
+    explodeOnOverheat: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Sidearm
+    - WeaponAntiqueLaser
+  - type: StaticPrice
+    price: 750
+  - type: StealTarget
+    stealGroup: WeaponAntiqueLaser
+  - type: MeleeWeapon
+    attackRate: 1.3333
+    damage:
+      types:
+        Blunt: 9
+    bluntStaminaDamageFactor: 1.25
+    wideAnimationRotation: 135
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: SentienceTarget # I hope this is only the captain's gun
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+    # not putting a BlockMovement component here cause that's funny.
+
+- type: entity
+  name: advanced laser pistol
+  parent: BaseWeaponOverheatingSmall
+  id: WeaponAdvancedLaser
+  description: An experimental high-energy laser pistol with a self-charging nuclear battery.
+  components:
+  - type: Item
+    size: Normal  # Intentionally larger than other pistols
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    proto: BulletLaser # WWDP
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 63
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+  - type: DamageOtherOnHit
+    staminaCost: 6
+
+- type: entity
+  name: energy shotgun
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
+  id: WeaponEnergyShotgun
+  description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileOverheatingAmmoProvider
+    explodeOnOverheat: false
+    proto: BulletLaserSpread
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletLaserSpread
+      fireCost: 150
+    - proto: BulletLaserSpreadSlug
+      fireCost: 300
+    - proto: BulletDisablerSmgSpread
+      fireCost: 120
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,7,1
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    heldPrefix: energy
+  - type: Tag
+    tags:
+    - HighRiskItem

@@ -88,6 +88,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         // Ammo providers
         InitializeBallistic();
         InitializeBattery();
+        InitializeOverheating(); // WWDP
         InitializeCartridge();
         InitializeChamberMagazine();
         InitializeMagazine();

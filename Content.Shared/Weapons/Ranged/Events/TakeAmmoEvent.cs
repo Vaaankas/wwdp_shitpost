@@ -36,6 +36,6 @@ public sealed class TakeAmmoEvent : EntityEventArgs
 /// </summary>
 public sealed class ForceSpawnAmmoEvent : EntityEventArgs
 {
-   
+
 }
 // WD EDIT END

@@ -54,7 +54,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 28
+        Heat: 30
   - type: PointLight
     radius: 3.0
     energy: 1.0
@@ -91,8 +91,8 @@
     impactEffect: BulletImpactEffectLaserGreen
     damage:
       types:
-        Heat: 10
-        Radiation: 10
+        Heat: 15
+        Radiation: 15
   - type: PointLight
     color: green
 

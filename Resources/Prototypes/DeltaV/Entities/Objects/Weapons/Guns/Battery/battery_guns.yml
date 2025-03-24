@@ -1,6 +1,6 @@
 - type: entity
   name: energy gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponOverheating
   id: WeaponEnergyGun
   description: "A basic hybrid energy gun with two settings: disable and kill."
   components:
@@ -33,20 +33,18 @@
       path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/DeltaV/Weapons/Guns/Empty/dry_fire.ogg
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
-  - type: ProjectileBatteryAmmoProvider
+  - type: ProjectileOverheatingAmmoProvider
     proto: BulletDisabler
-    fireCost: 50
   - type: EnergyGun
     fireModes:
     - proto: BulletDisabler
-      fireCost: 50
+      heatIncrease: 10
       name: disable
       state: disabler
-    - proto: BulletLaser # WWDP
-      fireCost: 100
+      overheatDamage:
+        types:
+          Heat: 5
+    - proto: BulletLaser
       name: lethal
       state: lethal
   - type: MagazineVisuals
@@ -64,7 +62,7 @@
 
 - type: entity
   name: x-01 multiphase energy gun
-  parent: BaseWeaponBatterySmall
+  parent: BaseWeaponOverheatingSmall
   id: WeaponEnergyGunMultiphase
   description: This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time.
   components:
@@ -86,24 +84,23 @@
       path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/DeltaV/Weapons/Guns/Empty/dry_fire.ogg
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
-  - type: ProjectileBatteryAmmoProvider
+  - type: ProjectileOverheatingAmmoProvider
+    explodeOnOverheat: false
     proto: BulletDisabler
-    fireCost: 50
   - type: EnergyGun
     fireModes:
     - proto: BulletDisabler
-      fireCost: 50
+      heatIncrease: 10
       name: disable
       state: disabler
-    - proto: BulletLaser # WWDP
-      fireCost: 100
+      overheatDamage:
+        types:
+          Heat: 5
+    - proto: BulletLaser
       name: lethal
       state: lethal
     # - proto: BulletEnergyGunIon
-    #   fireCost: 250
+    #   heatIncrease: 250
     #   name: ion
     #   state: special
   - type: MagazineVisuals
@@ -129,7 +126,7 @@
 
 - type: entity
   name: miniature energy gun
-  parent: BaseWeaponBatterySmall
+  parent: BaseWeaponOverheatingSmall
   id: WeaponEnergyGunMini
   description: A light version of the Energy gun with a smaller capacity.
   components:
@@ -148,20 +145,18 @@
       path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/DeltaV/Weapons/Guns/Empty/dry_fire.ogg
-  - type: Battery
-    maxCharge: 500
-    startingCharge: 500
-  - type: ProjectileBatteryAmmoProvider
+  - type: ProjectileOverheatingAmmoProvider
     proto: BulletDisabler
-    fireCost: 50
   - type: EnergyGun
     fireModes:
     - proto: BulletDisabler
-      fireCost: 50
+      heatIncrease: 10
       name: disable
       state: disabler
+      overheatDamage:
+        types:
+          Heat: 5
     - proto: BulletEnergyGunLaser
-      fireCost: 100
       name: lethal
       state: lethal
   - type: MagazineVisuals
@@ -198,7 +193,7 @@
 
 - type: entity
   name: PDW-9 Energy Pistol
-  parent: BaseWeaponBatterySmall
+  parent: BaseWeaponOverheatingSmall
   id: WeaponEnergyGunPistol
   description: A military grade sidearm, used by many militia forces throughout the local sector.
   components:
@@ -220,20 +215,18 @@
       path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/DeltaV/Weapons/Guns/Empty/dry_fire.ogg
-  - type: Battery
-    maxCharge: 800
-    startingCharge: 800
-  - type: ProjectileBatteryAmmoProvider
+  - type: ProjectileOverheatingAmmoProvider
     proto: BulletDisabler
-    fireCost: 50
   - type: EnergyGun
     fireModes:
     - proto: BulletDisabler
-      fireCost: 50
+      heatIncrease: 10
       name: disable
       state: disabler
+      overheatDamage:
+        types:
+          Heat: 5
     - proto: BulletEnergyGunLaser
-      fireCost: 100
       name: lethal
       state: lethal
   - type: MagazineVisuals
@@ -274,7 +267,7 @@
 
 - type: entity
   name: IK-60 energy carbine
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponOverheating, BaseGunWieldable]
   id: WeaponGunLaserCarbineAutomatic
   description: "A 20 round semi-automatic energy carbine."
   components:
@@ -297,12 +290,9 @@
     fireRate: 3
     availableModes:
       - SemiAuto
-  - type: Battery
-    maxCharge: 2000
-    startingCharge: 2000
-  - type: ProjectileBatteryAmmoProvider
+  - type: ProjectileOverheatingAmmoProvider
     proto: BulletEnergyGunLaser
-    fireCost: 100
+    heatIncrease: 10
   - type: MagazineVisuals
     magState: mag
     steps: 5

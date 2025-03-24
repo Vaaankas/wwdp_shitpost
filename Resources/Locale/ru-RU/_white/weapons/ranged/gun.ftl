@@ -23,3 +23,6 @@ gun-ballistic-full = Полон!
 gun-ballistic-empty = Пуст!
 
 ammo-top-round-examine = Сверху заряжен [color={$color}]{ $round }[/color].
+
+gun-overheating-examine = Может выстрелить [color=yellow]{$shots}[/color] раз подряд до перегрева.
+gun-overheating-examine-emergency = Может выстрелить [color=yellow]{$shots}[/color] раз подряд до перегрева и экстренного охлаждения.
