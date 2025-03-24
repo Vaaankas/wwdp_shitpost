@@ -250,3 +250,31 @@ public sealed class BatteryBulletRenderer : BaseBulletRenderer
         handle.DrawRect(UIBox2.FromDimensions(renderPos, new Vector2(SizeH, SizeV)), color);
     }
 }
+
+public sealed class OverheatingBulletRenderer : BaseBulletRenderer
+{
+    private static readonly Color ItemColor = Color.FromHex("#FFA500");
+    private static readonly Color ItemColorGone = Color.Black;
+
+    private const int SizeH = 4;
+    private const int SizeV = 20;
+    private const int Separation = 2;
+
+    public OverheatingBulletRenderer()
+    {
+        Parameters = new LayoutParameters
+        {
+            ItemWidth = SizeH,
+            ItemHeight = SizeV,
+            ItemSeparation = SizeH + Separation,
+            MinCountPerRow = 3,
+            VerticalSeparation = Separation
+        };
+    }
+
+    protected override void DrawItem(DrawingHandleScreen handle, Vector2 renderPos, bool spent, bool altColor)
+    {
+        var color = spent ? ItemColorGone : ItemColor;
+        handle.DrawRect(UIBox2.FromDimensions(renderPos, new Vector2(SizeH, SizeV)), color);
+    }
+}

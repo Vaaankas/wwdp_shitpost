@@ -26,3 +26,9 @@ ammo-top-round-examine = Сверху заряжен [color={$color}]{ $round }[
 
 gun-overheating-examine = Может выстрелить [color=yellow]{$shots}[/color] раз подряд до перегрева.
 gun-overheating-examine-emergency = Может выстрелить [color=yellow]{$shots}[/color] раз подряд до перегрева и экстренного охлаждения.
+gun-overheating-cooling-down = Оружие всё ещё охлаждается!
+gun-overheating-switch-safety =
+    { $on ->
+    *[true] Защита от перегрева включёна.
+    [false] Защита от перегрева отключёна.
+    }

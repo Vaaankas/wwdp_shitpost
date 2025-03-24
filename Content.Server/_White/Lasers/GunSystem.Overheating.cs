@@ -1,6 +1,8 @@
-﻿using Content.Server.Explosion.EntitySystems;
+﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Weapons.Ranged.Components;
 using Content.Shared._White.Lasers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
@@ -16,6 +18,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 public sealed partial class GunSystem
 {
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     protected override void InitializeOverheating()
     {
         base.InitializeOverheating();
@@ -60,17 +63,27 @@ public sealed partial class GunSystem
             "Default",
             50,
             2,
-            10);
+            5);
+        _flammableSystem.AdjustFireStacks(args.User, 5);
+        _flammableSystem.Ignite(args.User, uid);
+        QueueDel(uid);
     }
 
     public override void UpdateOverheatingAppearance(EntityUid uid, ProjectileOverheatingAmmoProviderComponent component
     )
     {
+        if (TryComp<AmmoCounterComponent>(uid, out var ammoCounter))
+        {
+            UpdateAmmoCount(uid, false);
+            Dirty(uid, ammoCounter);
+        }
+
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         Appearance.SetData(uid, AmmoVisuals.HasAmmo, component.Heat != 0, appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoCount, (int) component.Heat, appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoMax, (int) component.HeatDamageThreshold, appearance);
+
     }
 }

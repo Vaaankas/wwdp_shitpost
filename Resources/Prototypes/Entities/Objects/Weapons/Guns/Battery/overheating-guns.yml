@@ -25,6 +25,7 @@
     fireOnDropChance: 0.15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: WiresPanel
   - type: Appearance
   - type: StaticPrice
     price: 500
@@ -166,6 +167,7 @@
     - SemiAuto
   - type: ProjectileOverheatingAmmoProvider
     proto: BulletLaser
+    heatIncrease: 10
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -185,6 +187,7 @@
     overheatDamage:
       types:
         Heat: 1
+    heatIncrease: 10
   - type: StaticPrice
     price: 300
   - type: MeleeWeapon

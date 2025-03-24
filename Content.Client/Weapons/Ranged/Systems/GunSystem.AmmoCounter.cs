@@ -156,6 +156,49 @@ public sealed partial class GunSystem
         }
     }
 
+    public sealed class OverheatingBoxesStatusControl : Control
+    {
+        private readonly OverheatingBulletRenderer _bullets;
+        private readonly Label _ammoCount;
+
+        public OverheatingBoxesStatusControl()
+        {
+            MinHeight = 15;
+            HorizontalExpand = true;
+            VerticalAlignment = Control.VAlignment.Center;
+
+            AddChild(new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                Children =
+                {
+                    (_bullets = new OverheatingBulletRenderer
+                    {
+                        Margin = new Thickness(0, 0, 5, 0),
+                        HorizontalExpand = true
+                    }),
+                    (_ammoCount = new Label
+                    {
+                        StyleClasses = { StyleNano.StyleClassItemStatus },
+                        HorizontalAlignment = HAlignment.Right,
+                        VerticalAlignment = VAlignment.Bottom
+                    }),
+                }
+            });
+        }
+
+        public void Update(int count, int max)
+        {
+            _ammoCount.Visible = true;
+
+            var percent = (int)((float)count / (float)max * 100f);
+            _ammoCount.Text = $"{percent}%";
+
+            _bullets.Capacity = max;
+            _bullets.Count = count;
+        }
+    }
+
     private sealed class ChamberMagazineStatusControl : Control
     {
         private readonly BulletRender _bulletRender;

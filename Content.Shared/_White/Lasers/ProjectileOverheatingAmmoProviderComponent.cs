@@ -15,6 +15,11 @@ public sealed partial class ProjectileOverheatingAmmoProviderComponent : AmmoPro
     public string Prototype = default!;
 
     [DataField, AutoNetworkedField]
+    public bool Safety = true; // Toggleable safety in the panel
+
+    public TimeSpan SafetyCooldown;
+
+    [DataField, AutoNetworkedField]
     public float Heat;
 
     [DataField, AutoNetworkedField]
@@ -37,7 +42,7 @@ public sealed partial class ProjectileOverheatingAmmoProviderComponent : AmmoPro
     public TimeSpan EmergencyCooldownUpdate;
 
     [DataField, AutoNetworkedField]
-    public float EmergencyCooldownInterval = 60f; // seconds;
+    public float EmergencyCooldownInterval = 5f; // seconds;
 
     [DataField, AutoNetworkedField]
     public float HeatDamageThreshold = 100f;
@@ -49,7 +54,7 @@ public sealed partial class ProjectileOverheatingAmmoProviderComponent : AmmoPro
     public bool ExplodeOnOverheat = true;
 
     [DataField, AutoNetworkedField]
-    public float ExplosionThreshold = 150f;
+    public float ExplosionThreshold = 200f;
 
     [DataField, AutoNetworkedField]
     public string HeatDamagePopup = "Ouch! The overheated gun burns your hands!";
@@ -61,7 +66,7 @@ public sealed partial class ProjectileOverheatingAmmoProviderComponent : AmmoPro
     public string EmergencyCooldownPopup = "The weapon hisses as it begins to cool down";
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? EmergencyCooldownSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg");
+    public SoundSpecifier? SafetyCooldownSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg");
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier? OverheatSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");

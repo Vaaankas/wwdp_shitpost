@@ -1,6 +1,7 @@
 ﻿using Content.Client.Weapons.Ranged.Components;
 using Content.Shared._White.Lasers;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 
 
@@ -18,29 +19,21 @@ public sealed partial class GunSystem
 
     private void OnAmmoCountUpdate(EntityUid uid, ProjectileOverheatingAmmoProviderComponent component, UpdateAmmoCounterEvent args)
     {
-        if (args.Control is not BoxesStatusControl boxes)
+        if (args.Control is not OverheatingBoxesStatusControl boxes)
             return;
 
         var denominator = (int)(component.HeatDamageThreshold / component.HeatIncrease);
 
-        boxes.Update((int)(component.Heat / denominator), (int)(component.HeatDamageThreshold) / denominator);
+        boxes.Update((int)(component.Heat / component.HeatIncrease), denominator);
     }
 
     private void OnControl(EntityUid uid, ProjectileOverheatingAmmoProviderComponent component, AmmoCounterControlEvent args)
     {
-        args.Control = new BoxesStatusControl();
+        args.Control = new OverheatingBoxesStatusControl();
     }
 
-    public override void UpdateOverheatingAppearance(EntityUid uid, ProjectileOverheatingAmmoProviderComponent component
-    )
+    public override void UpdateOverheatingAppearance(EntityUid uid, ProjectileOverheatingAmmoProviderComponent component)
     {
-        // if (TryComp<AmmoCounterComponent>(uid, out var ammoCounter) && ammoCounter.Control is BoxesStatusControl boxes)
-        // {
-        //     var denominator = (int)(component.HeatDamageThreshold / component.HeatIncrease);
-//
-        //     boxes.Update((int)(component.Heat / denominator), (int)(component.HeatDamageThreshold) / denominator);
-        // }
-
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
