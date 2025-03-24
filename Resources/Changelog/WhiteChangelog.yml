@@ -2108,3 +2108,74 @@ Entries:
   id: 222
   time: '2025-03-16T10:15:16.0000000+00:00'
   url: https://github.com/WWhiteDreamProject/wwdpublic/pull/354
+- author: vanx
+  changes:
+    - type: Remove
+      message: Бесплатные ящики со снаряжением синдиката со станции прослушки.
+  id: 223
+  time: '2025-03-18T15:09:11.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/355
+- author: vanx
+  changes:
+    - type: Fix
+      message: >-
+        Двустволка из лодаутов бармена теперь спавнится с нелетальными
+        патронами.
+  id: 224
+  time: '2025-03-18T15:09:33.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/356
+- author: kekoven1
+  changes:
+    - type: Add
+      message: Трейт на спинаретку полезное
+  id: 225
+  time: '2025-03-18T15:09:58.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/357
+- author: Ligrof
+  changes:
+    - type: Add
+      message: реакция создания бумаги и коммунистической бумаги
+    - type: Add
+      message: рецепт крафта картона и революционного манифеста
+  id: 226
+  time: '2025-03-19T17:15:04.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/359
+- author: SentryPrimies
+  changes:
+    - type: Tweak
+      message: Респрайт ИПЦ
+  id: 227
+  time: '2025-03-20T07:29:08.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/360
+- author: NCast-Hops
+  changes:
+    - type: Add
+      message: Добавлен новый плащ ХоП-а! Искать в Снаряжениях Jobs>Head of Personel
+  id: 228
+  time: '2025-03-21T07:10:08.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/362
+- author: Spatison
+  changes:
+    - type: Add
+      message: Upstream 03.15 - 03.22
+  id: 229
+  time: '2025-03-22T07:09:32.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/364
+- author: Kai518
+  changes:
+    - type: Add
+      message: >-
+        Security loadouts now include holoprojector, flashlight, gas mask,
+        envirogloves. / В лоадауты для СБ добавлены голопроектор, фонарик,
+        маска, перчатки.
+    - type: Add
+      message: >-
+        All personnel now has ushanka in loadouts. / В лоадауты для всего
+        персонала добавлена ушанка.
+    - type: Add
+      message: >-
+        General brigadier plushie from SANABI was added. / Добавлена плюшевая
+        игрушка генерала бригадира из SANABI.
+  id: 230
+  time: '2025-03-23T20:38:50.0000000+00:00'
+  url: https://github.com/WWhiteDreamProject/wwdpublic/pull/240
