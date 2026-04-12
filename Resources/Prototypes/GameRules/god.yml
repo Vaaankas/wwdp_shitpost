@@ -1,0 +1,13 @@
+﻿- type: entity
+  id: God
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 3.5
+    duration: 1
+    earliestStart: 0
+    minimumPlayers: 0
+  - type: GameRule
+  - type: God
+
